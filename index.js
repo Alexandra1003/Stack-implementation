@@ -1,16 +1,17 @@
 class Stack {
     constructor() {
         this.values = [];
-        this.count = 0;
+        this.count = this.values.length;
     }
 
     push(elem) {
+        this.values.push(elem);
         this.count++;
         this.values[this.count - 1] = elem;
     }
 
     pop() {
-        if(this.count === 0) {
+        if (this.count === 0) {
             return;
         }
 
@@ -23,7 +24,14 @@ class Stack {
     }
 
     clone() {
-        return this;
+        let stack = new Stack();
+
+        this.values.forEach(value => {
+            stack.push(value);
+        });
+        stack.count = this.values.length;
+
+        return stack;
     }
 
     clear() {
@@ -31,7 +39,7 @@ class Stack {
             this.count--;
             this.values.pop();
         }
-        
+
     }
 
     showSize() {
@@ -40,6 +48,21 @@ class Stack {
 
     isEmpty() {
         return this.count === 0;
+    }
+
+    copyTo(array, index) {
+        if (!(array instanceof Array)) {
+            throw new Error(`${array} is not an Array!`);
+        }
+
+        if (index < 0) {
+            throw new Error('Index must be greater than 0!');
+        }
+
+        for (let i = 0; i < this.values.length; i++) {
+            array[index] = this.values[i];
+            index++;
+        }
     }
 }
 
@@ -56,3 +79,4 @@ a.push(3)
 console.log(a.push(4))
 
 a.showSize();
+
